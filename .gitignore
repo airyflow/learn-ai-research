@@ -13,3 +13,6 @@ logs/
 # Never commit real NeuroPathology / NACC data
 *.xlsx
 *.xls
+
+# Real data copied for the beginner tour (built by learn-al/beginner_tour/build_mini_dataset.py)
+data/
