@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Slurm / server output (the lessons tell you to `mkdir -p logs`)
+logs/
+*.out
+*.err
+
+# Never commit real NeuroPathology / NACC data
+*.xlsx
+*.xls
