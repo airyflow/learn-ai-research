@@ -25,20 +25,29 @@ cd /N/slate/mengjing/repos/learn-ai-research/<course>
 
 ## What this repo depends on
 
-The courses expect the projects they teach to sit **next to this repo**, in the same
-parent folder:
+The courses teach a **frozen copy** of the `al-molecular` research code, not the live repo.
+Research code changes all the time (on 2026-10-19 one commit moved most of
+`run_experiment.py` down by 130 lines), and the lessons quote it line by line. So they're
+pinned to one version:
 
 ```
 repos/
-├── learn-ai-research/   (this repo)
-├── al-molecular/        used by learn-al and learn-agent-rl
-└── NeuroPathlogy/       linked from learn-llm-eval's last lesson
+├── learn-ai-research/        (this repo)
+├── al-molecular/             the live research repo: change it freely, the courses won't break
+├── al-molecular-tutorial/    a git worktree of al-molecular at tag `tutorial-2026-10-20`
+│   └── runs/                 the few experiment results the lessons read (copied in, git-ignored)
+└── NeuroPathlogy/            linked from learn-llm-eval's last lesson
 ```
 
-* The `learn-al` scripts find `al-molecular` relative to themselves, and the notebooks use
-  the absolute path `/N/slate/mengjing/repos/al-molecular`. On another machine, edit
-  `AL_REPO` at the top of each notebook.
-* A few lessons read experiment results from `al-molecular/runs/`. That folder isn't in
-  al-molecular's git repo, so those cells only work where the runs exist (the IU cluster).
+* **Set it up** (once, from `repos/al-molecular`):
+  `git worktree add --detach ../al-molecular-tutorial tutorial-2026-10-20`, then copy
+  `history.json` and `all_explored_final.csv` from `runs/fusionfix_*`,
+  `runs/fusion_greedy_frac0.001` and `runs/fusion_ucb_frac0.001` into the copy's `runs/`.
+* **Move the courses to newer code:** in the copy, `git checkout <new tag>`, then re-run every
+  notebook and fix any line references that moved.
+* Scripts find the copy relative to themselves; notebooks use the absolute path
+  `/N/slate/mengjing/repos/al-molecular-tutorial` (`AL_REPO`). On another machine, edit those.
+* The big data (the 2.1M-molecule embeddings on `/N/project`) isn't copied. Lessons read it
+  in place, so the beginner tour only runs on the IU cluster.
 * `learn-llm-eval` uses only generated fake reports (`learn-llm-eval/common/fake_reports.py`).
   **Never copy real NACC reports or values into this repo.**

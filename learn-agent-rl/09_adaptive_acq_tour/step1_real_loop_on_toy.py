@@ -24,7 +24,7 @@ from pathlib import Path
 import numpy as np
 
 COURSE = Path(__file__).resolve().parent.parent
-PROJECT = Path("/N/slate/mengjing/repos/al-molecular")
+PROJECT = Path("/N/slate/mengjing/repos/al-molecular-tutorial")
 sys.path.insert(0, str(COURSE))
 sys.path.insert(0, str(PROJECT))
 

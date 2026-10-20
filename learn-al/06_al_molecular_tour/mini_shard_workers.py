@@ -27,7 +27,7 @@ import numpy as np
 import torch
 from torch import nn
 
-AL_REPO = Path(__file__).resolve().parents[3] / "al-molecular"
+AL_REPO = Path(__file__).resolve().parents[3] / "al-molecular-tutorial"
 sys.path.insert(0, str(AL_REPO))           # lets us import al-molecular's own helper
 from smiles_chunking import _chunk_bounds   # noqa: E402  (the exact function the real workers use)
 

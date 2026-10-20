@@ -15,7 +15,7 @@ from pathlib import Path
 
 import numpy as np
 
-AL_REPO = Path(__file__).resolve().parents[3] / "al-molecular"
+AL_REPO = Path(__file__).resolve().parents[3] / "al-molecular-tutorial"
 sys.path.insert(0, str(AL_REPO))
 from smiles_chunking import _chunk_bounds                       # noqa: E402
 from shared_embedding_store import preallocate, write_slice     # noqa: E402

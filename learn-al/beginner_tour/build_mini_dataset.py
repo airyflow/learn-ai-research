@@ -26,7 +26,7 @@ import numpy as np
 import pandas as pd
 
 SRC_EMB = Path("/N/project/SingleCell_Image/mengjing/enhits_large/embed")
-SRC_SCORES = Path("/N/slate/mengjing/repos/al-molecular/data/EnamineHTS_scores.csv.gz")
+SRC_SCORES = Path("/N/slate/mengjing/repos/al-molecular-tutorial/data/EnamineHTS_scores.csv.gz")
 OUT = Path(__file__).resolve().parents[2] / "data" / "enhits_mini"
 BACKBONES = ["molformer", "unimol2", "mhgged"]
 STEP = 100

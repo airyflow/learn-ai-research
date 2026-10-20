@@ -20,7 +20,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-AL_REPO = Path("/N/slate/mengjing/repos/al-molecular")
+AL_REPO = Path("/N/slate/mengjing/repos/al-molecular-tutorial")
 MINI_DIR = Path(__file__).resolve().parents[2] / "data" / "enhits_mini"
 BACKBONES = ["molformer", "unimol2", "mhgged"]
 

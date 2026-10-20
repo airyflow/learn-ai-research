@@ -18,7 +18,7 @@ from pathlib import Path
 
 import numpy as np
 
-RUNS = Path(__file__).resolve().parents[3] / "al-molecular" / "runs"
+RUNS = Path(__file__).resolve().parents[3] / "al-molecular-tutorial" / "runs"
 
 # 1. One run, one round at a time
 one = RUNS / "fusionfix_greedy_frac0.001_seed42" / "history.json"

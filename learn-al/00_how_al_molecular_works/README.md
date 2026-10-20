@@ -81,22 +81,22 @@ feel for the moving parts.
 
 ## 4. Toy → real code
 
-Every line of step 1 has a counterpart in [run_experiment.py](../../../al-molecular/run_experiment.py):
+Every line of step 1 has a counterpart in [run_experiment.py](../../../al-molecular-tutorial/run_experiment.py):
 
 | Toy (step 1) | Real code |
 |---|---|
-| `oracle = dict(zip(...))` | `load_oracle()`, [run_experiment.py:302](../../../al-molecular/run_experiment.py#L302) |
-| `embeddings = ...` | `load_embeddings()` → `EmbeddingFeaturizer.load()`, [run_experiment.py:246](../../../al-molecular/run_experiment.py#L246) |
+| `oracle = dict(zip(...))` | `load_oracle()`, [run_experiment.py:302](../../../al-molecular-tutorial/run_experiment.py#L302) |
+| `embeddings = ...` | `load_embeddings()` → `EmbeddingFeaturizer.load()`, [run_experiment.py:246](../../../al-molecular-tutorial/run_experiment.py#L246) |
 | `true_top_k`, `recall()` | `true_top_k_set()` :457, `MVEExplorer._recall()` |
-| random init with `r.choice` | [run_experiment.py:617](../../../al-molecular/run_experiment.py#L617) |
-| sign flip `-1.0 * scores` | `self._sign = -1.0`, [run_experiment.py:535](../../../al-molecular/run_experiment.py#L535), used at :647 |
-| `model.fit(...)` | `self.model.train(...)`, [run_experiment.py:649](../../../al-molecular/run_experiment.py#L649) |
+| random init with `r.choice` | [run_experiment.py:617](../../../al-molecular-tutorial/run_experiment.py#L617) |
+| sign flip `-1.0 * scores` | `self._sign = -1.0`, [run_experiment.py:535](../../../al-molecular-tutorial/run_experiment.py#L535), used at :647 |
+| `model.fit(...)` | `self.model.train(...)`, [run_experiment.py:649](../../../al-molecular-tutorial/run_experiment.py#L649) |
 | `model.predict(...)` on the undocked molecules | `_chunked_get_means_and_vars()`, :657 (predicts the pool in 50k-row chunks to save memory) |
-| `np.argsort(mu)[::-1][:BATCH]` | [run_experiment.py:664](../../../al-molecular/run_experiment.py#L664) |
+| `np.argsort(mu)[::-1][:BATCH]` | [run_experiment.py:664](../../../al-molecular-tutorial/run_experiment.py#L664) |
 | the `print` each round | the `Round 01/05 labeled=... recall=...` lines in every log, plus `iter_N/state.json` |
 
 `--surrogate <name>` is turned into a class by `mve()` in
-[molpal/models/\_\_init\_\_.py:109](../../../al-molecular/molpal/models/__init__.py#L109).
+[molpal/models/\_\_init\_\_.py:109](../../../al-molecular-tutorial/molpal/models/__init__.py#L109).
 
 ## 5. The methods being compared
 
@@ -117,9 +117,9 @@ takes minutes instead of days.
 
 ## 6. What the project has found so far
 
-From [README.md](../../../al-molecular/README.md),
-[reports/figure4_and_fusion_comparison.html](../../../al-molecular/reports/figure4_and_fusion_comparison.html) and
-[docs/adaptive_acq_results.md](../../../al-molecular/docs/adaptive_acq_results.md):
+From [README.md](../../../al-molecular-tutorial/README.md),
+[reports/figure4_and_fusion_comparison.html](../../../al-molecular-tutorial/reports/figure4_and_fusion_comparison.html) and
+[docs/adaptive_acq_results.md](../../../al-molecular-tutorial/docs/adaptive_acq_results.md):
 
 1. **Frozen fusion is nearly as good and far cheaper.** It reaches about 95% recall at the
    largest batch, close to MPN and fine-tuned MoLFormer (about 95–98%), at 100–1000×
@@ -166,5 +166,5 @@ embeddings are still loaded before it trims them.
 
 - **Module 06** (`06_al_molecular_tour/`): the systems side. Memory-mapped embedding
   stores, shard workers, checkpoint/resume, and a case study of the fusion sigma=0 bug.
-- Put a `breakpoint()` just after [run_experiment.py:657](../../../al-molecular/run_experiment.py#L657)
+- Put a `breakpoint()` just after [run_experiment.py:657](../../../al-molecular-tutorial/run_experiment.py#L657)
   and look at `mu`, `var` and `pool_idx` during a real run (module 02 shows how).

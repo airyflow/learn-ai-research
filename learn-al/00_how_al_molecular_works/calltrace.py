@@ -13,7 +13,7 @@ DEFINES it (so inherited methods are visible), and collapse repeats.
 import sys
 from pathlib import Path
 
-REPO = "/N/slate/mengjing/repos/al-molecular"
+REPO = "/N/slate/mengjing/repos/al-molecular-tutorial"
 
 
 def _is_repo(code):

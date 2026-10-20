@@ -24,7 +24,7 @@ from pathlib import Path
 import numpy as np
 import torch
 
-AL_REPO = Path(__file__).resolve().parents[3] / "al-molecular"
+AL_REPO = Path(__file__).resolve().parents[3] / "al-molecular-tutorial"
 sys.path.insert(0, str(AL_REPO))
 from surrogates import SingleBackboneMVESurrogate, EnsembleFusionSurrogate   # noqa: E402
 from molpal.acquirer.metrics import greedy, ucb                              # noqa: E402

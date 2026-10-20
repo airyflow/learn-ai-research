@@ -17,7 +17,7 @@ from pathlib import Path
 
 import numpy as np
 
-AL_REPO = Path(__file__).resolve().parents[3] / "al-molecular"
+AL_REPO = Path(__file__).resolve().parents[3] / "al-molecular-tutorial"
 sys.path.insert(0, str(AL_REPO))
 from molpal.acquirer.metrics import greedy, ucb   # noqa: E402  the repo's own code
 
