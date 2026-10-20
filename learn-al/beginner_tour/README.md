@@ -26,10 +26,13 @@ open the notebooks in VS Code, choose the **py310** kernel, and run cells top to
 | 2 | [2_your_first_experiment.ipynb](2_your_first_experiment.ipynb) | the active-learning loop; running the real experiment; its output files; seeds and budgets | `run_experiment.py` (`main`, `MVEExplorer.run`), `runs/` | ~3.5 min |
 | 3 | [3_how_the_model_learns.ipynb](3_how_the_model_learns.ipynb) | what "learning" means, PyTorch from zero, train/test, guesses with uncertainty, which backbone predicts best | `surrogates.py`, `molpal/models/losses.py` | ~1 min |
 | 4 | [4_choosing_molecules.ipynb](4_choosing_molecules.ipynb) | explore vs exploit (greedy vs UCB); three ways to combine backbones | `molpal/acquirer/metrics.py`, fusion surrogates, LT-All | ~6 min |
+| 4b | [4b_fingerprints_and_molpal.ipynb](4b_fingerprints_and_molpal.ipynb) | the classic approach: fingerprints, random forests and a graph network trained from scratch, against AI embeddings, on quality **and** cost | `--mode molpal`, `MolPALExplorer`, `molpal/featurizer.py`, molpal's model factory | ~25 min, needs a GPU |
 | 5 | [../00_how_al_molecular_works/classes_and_call_flow.ipynb](../00_how_al_molecular_works/classes_and_call_flow.ipynb) | classes, inheritance, and the real call tree of one round | how `run_experiment.py`, `molpal` and `surrogates.py` connect | ~1.5 min |
 | 6 | [6_smarter_strategies.ipynb](6_smarter_strategies.ipynb) | controllers that change exploration each round; functions as values; writing your own controller | `adaptive_acq/` | ~1.5 min |
 | 7 | [7_scaling_up.ipynb](7_scaling_up.ipynb) | memory, memory-mapped files, why reading order matters, chunks, shards, Slurm | `molpal/featurizer.py`, `_get_X`, `predict_pool_shard_worker.py`, `slurm/`, `embed/` | ~1.5 min |
 | 8 | [8_tests_and_bugs.ipynb](8_tests_and_bugs.ipynb) | silent vs loud bugs; three real bugs reproduced; running and writing tests | `tests/`, the 2026-10-10 fusion fixes | ~1 min |
+
+**Stuck on an exercise?** Every notebook's *Try it yourself* has worked answers in [solutions/](solutions/), run on the same real data. Try first, then compare.
 
 Notebook 5 is a little more advanced. If it feels heavy, skip to 6 and come back later. For
 more practice with basic Python first, try
@@ -41,6 +44,7 @@ All on real data:
 
 * With 6% of the molecules docked, active learning finds about 95% of the best 100. Random docking finds about 6%.
 * The three backbones differ enormously: MoLFormer's embeddings predict docking scores far worse than Uni-Mol2's or MHG-GED's.
+* Classic fingerprints (MolPAL's method) beat the weakest AI embedding but lose to the good ones, and MolPAL's graph network costs about 90× more time per campaign.
 * Exploring (UCB) doesn't beat simply trusting the model (greedy), here or in the project's 145-run study.
 * Combining backbones by equal vote is dragged down by a weak one. Learned combinations figure out which to trust.
 * Reading 500 scattered rows from a 6.5 GB file is tens to hundreds of times slower than reading 500 rows in a row.

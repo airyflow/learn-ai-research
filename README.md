@@ -11,7 +11,7 @@ CPU and ends with exercises.
 | 3 | [learn-llm-eval](learn-llm-eval/README.md) | evaluating LLM systems: metrics, calibration, bootstrap, LLM judges | the NeuroPathology report-extraction project, on **fake data only** |
 
 New to Python and machine learning? Start with the
-[beginner tour](learn-al/beginner_tour/README.md): 8 notebooks that walk through the whole
+[beginner tour](learn-al/beginner_tour/README.md): 9 notebooks that walk through the whole
 `al-molecular` project on real data. Run `learn-al/beginner_tour/build_mini_dataset.py` once
 first; it builds the small real dataset into `data/` (not in git).
 
