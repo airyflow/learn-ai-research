@@ -8,7 +8,7 @@ neural-network internals (`muben/`, `unimol1/`, `unimol2/`, and the `grover/` an
 their attention layers one by one wouldn't help you understand the active-learning system.
 
 Read §0 first. After that, jump to whatever you're reading in the code. Line numbers are
-where each class starts (as of 2026-10-19).
+where each class starts (as of 2026-10-20).
 
 **Status tags:**
 
@@ -72,7 +72,7 @@ deviation. The wrapper turns sigma into a variance for the acquisition functions
 
 ## 1. The loop: `run_experiment.py`
 
-### `DictObjective` ★ (line 283)
+### `DictObjective` ★ (line 349)
 
 **What:** a tiny "objective": something you call with a list of SMILES to get scores.
 
@@ -83,7 +83,7 @@ deviation. The wrapper turns sigma into a variance for the acquisition functions
 It mirrors molpal's `LookupObjective` (§10) without needing a file on disk. The explorers
 read `self.oracle[...]` directly, so this class is mostly a compatibility shim.
 
-### `MVEExplorer` ★ (line 421)
+### `MVEExplorer` ★ (line 495)
 
 **What:** *the* active-learning loop for every embedding-based method. Once you understand
 this class, you understand the project.
@@ -93,8 +93,9 @@ this class, you understand the project.
 * **`run()`** loops over rounds: build `(xs, ys)` from the labeled set with the sign flip → `model.train(xs, ys, epochs, batch)` → mask out labeled molecules → `_chunked_get_means_and_vars(model, pool)` (50k-row chunks; rank-fusion surrogates take a separate path, see `combine()`) → `acq_fn` → `argsort` → take the top `batch_size` → look them up in the oracle → `_recall()` → `_checkpoint()`. After the last round it calls `_save_final()`.
 * **Helpers:** `_best()` (lowest score so far), `_recall()` (fraction of `true_top_k` labeled), `_checkpoint(rnd, record)` (writes `iter_N/state.json` + `iter_N/scores.pkl`), `_save_final(history)` (writes `history.json` + `all_explored_final.csv`).
 * **Created by:** `main()` when `--mode mve` without `--parallel-predict`.
+* **Row-keyed mode** (`--row-keyed`, added 2026-10-19, currently only with `--parallel-predict`): for pools above about 100M molecules. Instead of the `oracle` dict and the `labeled_scores` / `true_top_k` sets, molecules are identified by **row number**. Scores come from a memory-mapped `scores.npy`, and the bookkeeping uses boolean arrays (`labeled_mask`, `topk_mask`) and `argpartition` instead of sorting. A `{smiles: score}` dict for the 1.53B pool would need about 370 GB. Checkpoints then write `iter_N/labeled_idx.npy` instead of `scores.pkl`, and `self.row_keyed` tells the methods which bookkeeping to use.
 
-### `ParallelMVEExplorer(MVEExplorer)` ★ (line 564)
+### `ParallelMVEExplorer(MVEExplorer)` ★ (line 722)
 
 **What:** the same loop for pools too large to score in one process (AmpC 99.5M, D4 116M).
 Only the *prediction* step changes. Training stays in-process, because the labeled set is small.
@@ -107,7 +108,7 @@ Only the *prediction* step changes. Training stays in-process, because the label
 * **Created by:** `main()` with `--mode mve --parallel-predict --num-shards N --coord-dir D`.
 * **Runnable miniature:** `learn-al/06_al_molecular_tour/mini_shard_workers.py`.
 
-### `MolPALExplorer` ★ (line 1009)
+### `MolPALExplorer` ★ (line 1191)
 
 **What:** the loop for the **MolPAL baseline** (method [1], Chemprop MPN), plus RF and NN.
 It's a separate class, not a subclass of `MVEExplorer`, because there are no embeddings:
@@ -118,7 +119,7 @@ the model reads SMILES (MPN) or fingerprints (RF/NN) itself.
 * Has its own `_best`, `_recall`, `_checkpoint` and `_save_final`, written the same way. That duplication is a cost of not sharing a base class.
 * No resume support (`--resume` is wired only for the MVE branches and the parallel MPN branch).
 
-### `ParallelMolPALExplorer(MolPALExplorer)` ★ (line 1127)
+### `ParallelMolPALExplorer(MolPALExplorer)` ★ (line 1309)
 
 **What:** MPN with sharded pool prediction, via `predict_pool_shard_worker_mpn.py`, over the
 same marker-file protocol as `ParallelMVEExplorer`. It exists because predicting AmpC's
@@ -153,7 +154,7 @@ NumPy arrays). Every `--mode mve` run uses it.
 * `get_means`, `apply`; `save`/`load` are no-ops (nothing is saved).
 * **Created by:** the `mve()` factory, for every surrogate type except `single`.
 
-### `SingleBackboneEmbeddingModel(EmbeddingMVEModel)` ★ (`mvemodels.py:179`)
+### `SingleBackboneEmbeddingModel(EmbeddingMVEModel)` ★ (`mvemodels.py:198`)
 
 **What:** the same wrapper, restricted to **one** backbone. It overrides only `__init__`:
 it calls `super().__init__(...)`, checks the backbone exists, then sets

@@ -2,11 +2,15 @@
 
 Run:   python 06_al_molecular_tour/fusion_uncertainty.py      (CPU, a few seconds)
 
-al-molecular's EnsembleFusionSurrogate (surrogates.py, class at ~line 365) has a
-docstring that says:
+NOTE (2026-10-20): this describes the code BEFORE the 2026-10-10 fix. EnsembleFusionSurrogate
+now really returns rank disagreement as sigma, and ranks once over the whole pool. See
+beginner_tour/8_tests_and_bugs.ipynb for the fixed code and the tests that guard it.
+
+Before the fix, EnsembleFusionSurrogate (surrogates.py, class now at line 393) had a
+docstring that said:
     UCB_score = -mean_rank_norm + beta * std_rank_norm
     (inter-backbone rank DISAGREEMENT used as uncertainty)
-but its predict() (~line 430) returns (-borda, zeros): the beta and std terms
+but its predict() returned (-borda, zeros): the beta and std terms
 are never computed. This script rebuilds both versions on toy data so you can
 see what difference that makes. Two lessons:
   1. With sigma == 0, UCB is exactly greedy (ucb = mu + beta * sigma).
