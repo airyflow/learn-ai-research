@@ -10,10 +10,11 @@ CPU and ends with exercises.
 | 2 | [learn-agent-rl](learn-agent-rl/README.md) | reinforcement learning and LLM agents | when an active-learning campaign should explore vs exploit (`al-molecular/adaptive_acq`) |
 | 3 | [learn-llm-eval](learn-llm-eval/README.md) | evaluating LLM systems: metrics, calibration, bootstrap, LLM judges | the NeuroPathology report-extraction project, on **fake data only** |
 
-New to Python and machine learning? Start with the
-[beginner tour](learn-al/beginner_tour/README.md): 9 notebooks that walk through the whole
-`al-molecular` project on real data. Run `learn-al/beginner_tour/build_mini_dataset.py` once
-first; it builds the small real dataset into `data/` (not in git).
+New to Python and machine learning? Start with **[learn-al/START_HERE.md](learn-al/START_HERE.md)**.
+It takes you from zero: a setup check (which also builds the small real dataset into
+`data/`, not in git), Python basics, then the
+[beginner tour](learn-al/beginner_tour/README.md), 9 notebooks that walk through the whole
+`al-molecular` project on real data, with worked answers.
 
 ## Setup
 

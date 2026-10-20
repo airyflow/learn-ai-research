@@ -5,23 +5,24 @@ no machine learning**. Each notebook runs the project's real code on **real data
 real molecules with real docking scores and real embeddings from three AI models. Every new
 Python or science idea is explained the first time it appears.
 
-## Before you start (once)
+## Before you start
 
-```bash
-source /N/slate/mengjing/miniconda3/etc/profile.d/conda.sh
-conda activate py310
-python /N/slate/mengjing/repos/learn-ai-research/learn-al/beginner_tour/build_mini_dataset.py
-```
+Open **[0_setup_check.ipynb](0_setup_check.ipynb)** in VS Code, choose the **py310** kernel
+(top-right corner), and run it. It checks everything the tour needs, builds the small real
+dataset (once, under a minute, 206 MB into `learn-ai-research/data/`, which is not in git), and
+tells you how to fix anything that's wrong. Then run the notebooks below, cells top to bottom,
+with **Shift + Enter**.
 
-The last line builds the small real dataset (about 10 seconds to a minute, 206 MB) into
-`learn-ai-research/data/enhits_mini/`. It's real research data, so it is **not** in git. Then
-open the notebooks in VS Code, choose the **py310** kernel, and run cells top to bottom with
-**Shift + Enter**.
+Never written Python before? Do
+[../00_how_al_molecular_works/python_from_zero.ipynb](../00_how_al_molecular_works/python_from_zero.ipynb)
+first. The tour assumes the basics it teaches. For the whole learning path, see
+[../START_HERE.md](../START_HERE.md), and look up any word in [../GLOSSARY.md](../GLOSSARY.md).
 
 ## The notebooks
 
 | # | Notebook | What you'll learn | Part of al-molecular | Runtime |
 |---|---|---|---|---|
+| 0 | [0_setup_check.ipynb](0_setup_check.ipynb) | checks your setup and builds the data; run it first | none (checks the frozen copy and the data) | ~2 min |
 | 1 | [1_meet_the_data.ipynb](1_meet_the_data.ipynb) | docking scores, SMILES, drawing molecules, embeddings, the repo's folders | `data/`, `embed/` outputs, the folder layout | ~1.5 min |
 | 2 | [2_your_first_experiment.ipynb](2_your_first_experiment.ipynb) | the active-learning loop; running the real experiment; its output files; seeds and budgets | `run_experiment.py` (`main`, `MVEExplorer.run`), `runs/` | ~3.5 min |
 | 3 | [3_how_the_model_learns.ipynb](3_how_the_model_learns.ipynb) | what "learning" means, PyTorch from zero, train/test, guesses with uncertainty, which backbone predicts best | `surrogates.py`, `molpal/models/losses.py` | ~1 min |
@@ -34,9 +35,7 @@ open the notebooks in VS Code, choose the **py310** kernel, and run cells top to
 
 **Stuck on an exercise?** Every notebook's *Try it yourself* has worked answers in [solutions/](solutions/), run on the same real data. Try first, then compare.
 
-Notebook 5 is a little more advanced. If it feels heavy, skip to 6 and come back later. For
-more practice with basic Python first, try
-[../00_how_al_molecular_works/python_from_zero.ipynb](../00_how_al_molecular_works/python_from_zero.ipynb).
+Notebook 5 is a little more advanced. If it feels heavy, skip to 6 and come back later.
 
 ## What you'll find out along the way
 
@@ -55,4 +54,4 @@ All on real data:
 | File | Job |
 |---|---|
 | `tour.py` | small helpers every notebook imports: data paths, `load_mini()`, `draw()`, `register_mini()` |
-| `build_mini_dataset.py` | builds the real mini dataset (run once) |
+| `build_mini_dataset.py` | builds the real mini dataset (`0_setup_check` runs it for you) |

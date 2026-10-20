@@ -1,6 +1,10 @@
 # learn-al: Python, debugging, PyTorch, memory and distributed training, all through active learning
 
-This is for someone who already programs in another language. Every module is a
+> **New to Python or machine learning? Read [START_HERE.md](START_HERE.md) first.** It gives one
+> path through everything below, from a setup check and Python from zero up to these modules,
+> and says what to do when something goes wrong. Unfamiliar word? [GLOSSARY.md](GLOSSARY.md).
+
+The numbered modules (01–06) are for someone who already programs. Every module is a
 small runnable script built around the same task, an **active-learning loop over
 a molecule pool**, so each concept maps directly onto `al-molecular`. Read the
 comments, run the script, then do the `# EXERCISE` lines at the bottom.
@@ -14,7 +18,7 @@ mkdir -p logs        # Slurm output goes here
 
 | # | Script | Concepts | AL piece | Run |
 |---|--------|----------|----------|-----|
-| ★ | `beginner_tour/README.md` + 9 notebooks + worked answers | **for complete beginners:** Python, PyTorch and active learning from zero, on REAL data | a tour of the whole al-molecular repo, running its real code | open `beginner_tour/1_meet_the_data.ipynb` |
+| ★ | `beginner_tour/README.md` + 9 notebooks + worked answers | **for complete beginners:** Python, PyTorch and active learning from zero, on REAL data | a tour of the whole al-molecular repo, running its real code | follow [START_HERE.md](START_HERE.md) |
 | 00 | `00_how_al_molecular_works/README.md` + 4 scripts | the big picture: pool, oracle, backbones, surrogate, greedy vs UCB, rank fusion, reading `runs/` | the whole al-molecular loop on toy data, then the repo's real surrogates and real results | `python 00_how_al_molecular_works/step1_the_loop.py` (then 2, 3, 4) |
 | 01 | `01_python/idioms.py` | truthiness, slicing, comprehensions, unpacking, dict/set/Counter, `*args/**kwargs`, dataclasses, context managers, generators, the mutable-default trap | pool/labeled bookkeeping with sets and dicts | `python 01_python/idioms.py` |
 | 01 | `01_python/modules_and_imports.md` | `import`, packages, `sys.path`, `__main__`, `python -m` | the knowledge you need to reorganize al-molecular | read |
@@ -26,7 +30,7 @@ mkdir -p logs        # Slurm output goes here
 
 ## Suggested order
 
-New to Python and machine learning? Start with **`beginner_tour/`** (9 notebooks with worked answers, real data) and come back here afterwards.
+New to Python and machine learning? Follow **[START_HERE.md](START_HERE.md)**: a setup check, Python from zero, then the beginner tour (9 notebooks with worked answers, on real data). Come back here afterwards.
 
 0. **Big picture first (day 1).** Run the four scripts in `00_how_al_molecular_works/` and read its README.
 1. **Python (week 1–2).** `idioms.py`, then skim the official
@@ -34,7 +38,10 @@ New to Python and machine learning? Start with **`beginner_tour/`** (9 notebooks
    differs* from languages you know. Read `al-molecular/smiles_chunking.py` line by line.
 2. **Debugging (week 2).** Fix `buggy_al_loop.py` with the debugger, not by reading the
    code. Then put a `breakpoint()` in `al-molecular/run_experiment.py` where the pool is
-   updated, and step through one AL iteration of a real run.
+   updated, and step through one AL iteration of a real run. (If you do this in the frozen
+   copy the tour uses, `repos/al-molecular-tutorial`, undo it afterwards with
+   `git -C /N/slate/mengjing/repos/al-molecular-tutorial checkout -- .`, or use VS Code's
+   breakpoints, which don't change the file.)
 3. **PyTorch (week 3).** `al_loop.py` with all three acquisition functions. Then
    [Learn the Basics](https://pytorch.org/tutorials/beginner/basics/intro.html). Map each
    block of `al_loop.py` onto `al-molecular/surrogates.py`.
